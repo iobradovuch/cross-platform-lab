@@ -1,17 +1,67 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+      lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Hello Spring!</title>
+    <!-- Localised text -->
+    <title th:text="#{dashboard.title}"></title>
 </head>
 <body>
-<h1 th:text="${pageTitle}"></h1><div>
+    <!-- Variables -->
+    <p th:text="${username}"></p>
+    <p th:text="${user.getName()}"></p>
+    <p th:text="${user.name}"></p>
+
+    <!-- Maps -->
+    <h1>Capitals of the World</h1>
+    <p th:text="${capitalsOfTheWorld.Belgium}"></p>
+    <p th:text="${capitalsOfTheWorld.France}"></p>
+    <p th:text="${capitalsOfTheWorld.Germany}"></p>
+    <p th:text="${capitalsOfTheWorld['The Netherlands']}"></p>
+
+
+    <!-- Arrays and lists -->
+    <p th:text="${vehiclesList[0].name}"></p>
+
+    <!-- Selected objects -->
+    <div th:object="${car}">
+        <p>Brand: <span th:text="*{brand}"></span></p>
+        <p>Type: <span th:text="*{type}"></span></p>
+        <p>Fuel: <span th:text="*{fuelType}"></span></p>
+        <p>Color: <span th:text="*{color}"></span></p>
+    </div>
+
+    <!-- Link -->
+    <a th:href="@{https://www.google.com/search?q=thymeleaf}">Search</a>
+
+    <!-- Literal Substitutions -->
+    <p th:text="'Hello, ' + ${username}"></p>
+    <p th:text="|Welcome, ${username}!|"></p>
+
+    <!-- Expression Inlining -->
+    <span>[[${username}]]</span>
+
+    <!-- Text content of the element -->
+    <div th:text="${username}">Bob</div>
+
+
+    <!-- Conditional inclusion -->
+    <div th:if="${!car.getColor().equals(Blue)}">
+        The colour of the car isn't blue
+    </div>
+
+    <!-- Conditional exclusion -->
+    <div th:unless="${car.getColor().isEmpty()}">
+        The car object has a color.
+    </div>
+
+    <!-- Iteration -->
     <ul>
-        <li th:each="language : ${languages}">
-            <span th:text="${language}"></span>
-        </li>
-    </ul> </div>
+        <li th:each="language : ${languages}" th:text="${language}"></li>
+    </ul>
+
+    <!-- Preprocessing -->
+    <p th:text="${'Preprocessing: ' + '__${capitalsOfTheWorld}__'}"></p>
 </body>
 </html>
